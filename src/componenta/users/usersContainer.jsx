@@ -5,6 +5,7 @@ import {
   unFollowedCreator
 } from "../../redux/users-reduser";
 import Users from "./users";
+import UsersClass from "./usersClass";
 
 function mapStateToProps(state) {
   return {
@@ -19,5 +20,5 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const usersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+const usersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersClass);
 export default usersContainer;

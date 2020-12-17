@@ -4,48 +4,48 @@ const UNFOLLOWED = "UNFOLLOWED";
 
 const initialState = {
   items: [
-    // {
-    //   name: "Shubert",
-    //   id: 1,
-    //   photos: {
-    //     small:
-    //       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg",
-    //     large: null
-    //   },
-    //   status: null,
-    //   followed: false
-    // },
-    // {
-    //   name: "Hacker",
-    //   id: 2,
-    //   photos: {
-    //     small:
-    //       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg",
-    //     large: null
-    //   },
-    //   status: null,
-    //   followed: false
-    // },
-    // {
-    //   name: "Dima",
-    //   id: 3,
-    //   photos: {
-    //     small: "https://ktonanovenkogo.ru/image/priroda-gora.jpg",
-    //     large: null
-    //   },
-    //   status: null,
-    //   followed: false
-    // },
-    // {
-    //   name: "Anna",
-    //   id: 4,
-    //   photos: {
-    //     small: "https://ktonanovenkogo.ru/image/priroda-gora.jpg",
-    //     large: null
-    //   },
-    //   status: null,
-    //   followed: false
-    // }
+    {
+      name: "Shubert",
+      id: 1,
+      photos: {
+        small:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg",
+        large: null
+      },
+      status: null,
+      followed: false
+    },
+    {
+      name: "Hacker",
+      id: 2,
+      photos: {
+        small:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg",
+        large: null
+      },
+      status: null,
+      followed: false
+    },
+    {
+      name: "Dima",
+      id: 3,
+      photos: {
+        small: "https://ktonanovenkogo.ru/image/priroda-gora.jpg",
+        large: null
+      },
+      status: null,
+      followed: false
+    },
+    {
+      name: "Anna",
+      id: 4,
+      photos: {
+        small: "https://ktonanovenkogo.ru/image/priroda-gora.jpg",
+        large: null
+      },
+      status: null,
+      followed: false
+    }
   ]
 };
 
