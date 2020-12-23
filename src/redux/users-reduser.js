@@ -79,7 +79,7 @@ const usersReducer = (state = initialState, action) => {
   }
 };
 
-export const followedCreator = (idUser) => ({ type: FOLLOWED, idUser });
-export const unFollowedCreator = (idUser) => ({ type: UNFOLLOWED, idUser });
-export const setUsersCreator = (users) => ({ type: SET_USERS, users });
+export const followOnClick = (idUser) => ({ type: FOLLOWED, idUser });
+export const unFollowOnClick = (idUser) => ({ type: UNFOLLOWED, idUser });
+export const setUsers = (users) => ({ type: SET_USERS, users });
 export default usersReducer;
