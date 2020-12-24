@@ -65,11 +65,11 @@ class usersContainer extends React.Component {
   ];
   setUsers = () => {
     // axios
-    //   .get("https://social-network.samuraijs.com/api/1.0/users", {
+    //   .get("https://social-network.samuraijs.com/api/1.0/users?page=3", {
     //     withCredentials: true,
     //     headers: {
-    //       "API-KEY": "e727ac2e-86d0-4184-87d3-84b605c89df9",
-    //     },
+    //       "API-KEY": "e727ac2e-86d0-4184-87d3-84b605c89df9"
+    //     }
     //   })
     //   .then((response) => this.props.setUsers(response.data.items));
     this.props.setUsers(this.userArr);
