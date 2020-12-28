@@ -1,0 +1,7 @@
+.priv {
+  grid-area: h;
+  background: rgba(1, 1, 1, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,12 +1,12 @@
 import React from "react";
 import "./styles.css";
-import Header from "./componenta/header/Header";
-import Sitebar from "./componenta/sitebar/Sitebar";
-import Profile from "./componenta/profile/Profile";
-import News from "./componenta/news/News";
+import Header from "./components/header/Header";
+import Sitebar from "./components/sitebar/Sitebar";
+import News from "./components/news/News";
 import { BrowserRouter, Route } from "react-router-dom";
-import DialogsContainer from "./componenta/dialogs/DialogsContainer";
-import usersContainer from "./componenta/users/usersContainer";
+import DialogsContainer from "./components/dialogs/DialogsContainer";
+import usersContainer from "./components/users/usersContainer";
+import ProfileContainer from "./components/profile/ProfileContainer";
 
 export default function App(props) {
   let state = props.store.getState();
@@ -18,8 +18,8 @@ export default function App(props) {
         <Route
           path="/profile"
           render={() => (
-            <Profile
-              store={props.store}
+            <ProfileContainer
+              // store={props.store}
               // state={state.profilePage}
               // dispatch={props.state.dispatch}
             />

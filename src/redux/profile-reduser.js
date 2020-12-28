@@ -1,12 +1,7 @@
 const ADD_NEW_POST_TEXT = "ADD_NEW_POST_TEXT";
 const ADD_NEW_MY_POST = "ADD_NEW_MY_POST";
-export const addNewPostTextAction = (text) => ({
-  type: ADD_NEW_POST_TEXT,
-  text
-});
-export const addNewMyPost = () => ({
-  type: ADD_NEW_MY_POST
-});
+const SET_PROFILE = "SET_PROFILE"
+
 
 const initialState = {
   logo:
@@ -35,7 +30,8 @@ const initialState = {
       img: "https://ktonanovenkogo.ru/image/priroda-gora.jpg"
     }
   ],
-  newPostText: "Test post text"
+  newPostText: "Test post text",
+  usersProfile: null
 };
 // const profileReduser = (state = initialState, action) => {
 
@@ -78,9 +74,24 @@ const profileReduser = (state = initialState, action) => {
         ],
         newPostText: ""
       };
+    case SET_PROFILE:
+      return {
+        ...state,
+        usersProfile: {...action.data}
+      }
 
     default:
       return state;
   }
 };
+
+
+export const addNewPostTextAction = (text) => ({
+  type: ADD_NEW_POST_TEXT,
+  text
+});
+export const addNewMyPost = () => ({
+  type: ADD_NEW_MY_POST
+});
+export const setUserProfile = (data) => ({type: SET_PROFILE, data})
 export default profileReduser;
