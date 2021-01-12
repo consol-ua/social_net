@@ -101,6 +101,7 @@ class usersContainer extends React.Component {
 
   componentDidMount() {
     this.props.loaded(true);
+    this.props.setCurrentPage(1);
     axios
       .get(
         `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`,

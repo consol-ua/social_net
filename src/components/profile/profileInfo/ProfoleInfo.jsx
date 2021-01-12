@@ -1,12 +1,12 @@
 import React from "react";
 import s from "../profile.module.css";
 import defaultPhoto from "../../../assets/image/default_profile_photo.png";
-import Loader from "../../common/loader/loader";
+import Preloader from "../../common/Preloader/Preloader";
 
 export default function ProfileInfo(props) {
   console.log(props);
   if (!props.state) {
-    return <Loader />;
+    return <Preloader />;
   }
 
   return (

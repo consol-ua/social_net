@@ -16,7 +16,7 @@ export default function App(props) {
         <Header />
         <Sitebar state={state.sitebarPage} />
         <Route
-          path="/profile"
+          path="/profile/:userId?"
           render={() => (
             <ProfileContainer
               // store={props.store}

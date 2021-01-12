@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Loader from "../common/loader/loader";
+import Preloader from "../common/Preloader/Preloader";
 import s from "./users.module.css";
 import defaultPhoto from "../../assets/image/default_profile_photo.png";
 
@@ -47,7 +47,7 @@ export default function Users(props) {
   let lastPages = props.currentPage === pages[pages.length - 1];
   return (
     <div className={s.container}>
-      {props.isLoaded ? <Loader /> : null}
+      {props.isLoaded ? <Preloader /> : null}
       <div className={s.pages_count}>
         {pages.length < 15 ? (
           pages.map((el) => {
@@ -75,7 +75,7 @@ export default function Users(props) {
             >
               Previous page
             </span>
-            <span>{props.currentPage}</span>
+            <span>{props.currentPage + ` (${pages.length})`}</span>
             <span
               className={[s.next, lastPages && s.unActive].join(" ")}
               onClick={(e) => {
