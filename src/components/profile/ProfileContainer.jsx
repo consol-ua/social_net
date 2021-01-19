@@ -7,10 +7,13 @@ import Profile from "./Profile";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    debugger;
     let userId = this.props.match.params.userId;
     if (!userId) {
-      userId = 12999;
+      if (this.props.auth) {
+        userId = this.props.authUser;
+      } else {
+        userId = 12999;
+      }
     }
     Axios.get(
       `https://social-network.samuraijs.com/api/1.0/profile/${userId}`,
@@ -29,7 +32,11 @@ class ProfileContainer extends React.Component {
   }
 }
 
-let mapStateToProps = (state) => ({ profile: state.profilePage });
+let mapStateToProps = (state) => ({
+  profile: state.profilePage,
+  auth: state.auth.isAuth,
+  authUser: state.auth.id,
+});
 
 let WithUrlDataContainer = withRouter(ProfileContainer);
 

@@ -4,7 +4,6 @@ import defaultPhoto from "../../../assets/image/default_profile_photo.png";
 import Preloader from "../../common/Preloader/Preloader";
 
 export default function ProfileInfo(props) {
-  console.log(props);
   if (!props.state) {
     return <Preloader />;
   }

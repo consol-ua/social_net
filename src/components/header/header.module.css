@@ -4,4 +4,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
+}
+.priv h1 {
+  display: block;
+  flex: 1 1 30%;
+  text-align: center
+}
+
+.loginBlock a {
+  color: black;
 }
