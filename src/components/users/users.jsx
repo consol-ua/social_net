@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import Preloader from "../common/Preloader/Preloader";
 import s from "./users.module.css";
 import defaultPhoto from "../../assets/image/default_profile_photo.png";
+import { userAPI } from "../../API/API";
 
 export default function Users(props) {
   let renderUsers = () => {
@@ -25,11 +26,27 @@ export default function Users(props) {
           </div>
           <div className={s.user__button}>
             {el.followed ? (
-              <button onClick={() => props.unFollowOnClick(el.id)}>
+              <button
+                onClick={() => {
+                  userAPI.delFollowUser(el.id).then((response) => {
+                    if (response.resultCode === 0) {
+                      props.unFollowOnClick(el.id);
+                    }
+                  });
+                }}
+              >
                 unfollowed
               </button>
             ) : (
-              <button onClick={() => props.followOnClick(el.id)}>
+              <button
+                onClick={() => {
+                  userAPI.postFollowUser(el.id).then((response) => {
+                    if (response.resultCode === 0) {
+                      props.followOnClick(el.id);
+                    }
+                  });
+                }}
+              >
                 followed
               </button>
             )}
@@ -49,45 +66,49 @@ export default function Users(props) {
     <div className={s.container}>
       {props.isLoaded ? <Preloader /> : null}
       <div className={s.pages_count}>
-        {pages.length < 15 ? (
-          pages.map((el) => {
-            return (
-              <span
-                key={el}
-                className={props.currentPage === el && s.activePage}
-                onClick={(e) => {
-                  props.onPageChanged(el);
-                }}
-              >
-                {el}
-              </span>
-            );
-          })
-        ) : (
-          <>
-            <span
-              className={[s.previous, firstPage && s.unActive].join(" ")}
-              onClick={(e) => {
-                if (props.currentPage > 1) {
-                  props.onPageChanged(props.currentPage - 1);
-                }
-              }}
-            >
-              Previous page
-            </span>
-            <span>{props.currentPage + ` (${pages.length})`}</span>
-            <span
-              className={[s.next, lastPages && s.unActive].join(" ")}
-              onClick={(e) => {
-                if (props.currentPage < pages.length) {
-                  props.onPageChanged(props.currentPage + 1);
-                }
-              }}
-            >
-              Next Page
-            </span>
-          </>
-        )}
+        <>
+          <span
+            className={[s.previous, firstPage && s.unActive].join(" ")}
+            onClick={(e) => {
+              if (props.currentPage > 1) {
+                props.onPageChanged(1);
+              }
+            }}
+          >
+            -- FIRST PAGE --
+          </span>
+          <span
+            className={[s.previous, firstPage && s.unActive].join(" ")}
+            onClick={(e) => {
+              if (props.currentPage > 1) {
+                props.onPageChanged(props.currentPage - 1);
+              }
+            }}
+          >
+            Previous page
+          </span>
+          <span>{props.currentPage + ` (${pages.length})`}</span>
+          <span
+            className={[s.next, lastPages && s.unActive].join(" ")}
+            onClick={(e) => {
+              if (props.currentPage < pages.length) {
+                props.onPageChanged(props.currentPage + 1);
+              }
+            }}
+          >
+            Next Page
+          </span>
+          <span
+            className={[s.next, lastPages && s.unActive].join(" ")}
+            onClick={(e) => {
+              if (props.currentPage < pages.length) {
+                props.onPageChanged(pagesCount);
+              }
+            }}
+          >
+            -- LAST PAGE --
+          </span>
+        </>
       </div>
       <div className={s.users}>{renderUsers()}</div>
     </div>

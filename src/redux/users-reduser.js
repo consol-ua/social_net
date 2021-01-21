@@ -2,8 +2,8 @@ const SET_USERS = "SET_USERS";
 const FOLLOWED = "FOLLOWED";
 const UNFOLLOWED = "UNFOLLOWED";
 const SET_TOTOL_USERS_COUNT = "SET_TOTOL_USERS_COUNT";
-const SET_CURRENT_PAGE = "SET_CURRENT_PAGE"
-const LOADED = "LOADED"
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const LOADED = "LOADED";
 
 const initialState = {
   items: [
@@ -53,7 +53,7 @@ const initialState = {
   currentPage: 1,
   pageSize: 5,
   totalUsersCount: 0,
-  isLoaded: false
+  isLoaded: false,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -68,7 +68,7 @@ const usersReducer = (state = initialState, action) => {
             el.followed = true;
           }
           return el;
-        })
+        }),
       };
     case UNFOLLOWED:
       return {
@@ -78,23 +78,23 @@ const usersReducer = (state = initialState, action) => {
             el.followed = false;
           }
           return el;
-        })
+        }),
       };
     case SET_TOTOL_USERS_COUNT:
       return {
         ...state,
-        totalUsersCount: action.count
-      }
+        totalUsersCount: action.count,
+      };
     case SET_CURRENT_PAGE:
       return {
         ...state,
-        currentPage: action.page
-      }
+        currentPage: action.page,
+      };
     case LOADED:
       return {
         ...state,
-        isLoaded: action.isLoaded
-      }
+        isLoaded: action.isLoaded,
+      };
 
     default:
       return state;
@@ -104,7 +104,10 @@ const usersReducer = (state = initialState, action) => {
 export const followOnClick = (idUser) => ({ type: FOLLOWED, idUser });
 export const unFollowOnClick = (idUser) => ({ type: UNFOLLOWED, idUser });
 export const setUsers = (users) => ({ type: SET_USERS, users });
-export const setTotalUsersCount = (count) => ({ type: SET_TOTOL_USERS_COUNT, count });
+export const setTotalUsersCount = (count) => ({
+  type: SET_TOTOL_USERS_COUNT,
+  count,
+});
 export const setCurrentPage = (page) => ({ type: SET_CURRENT_PAGE, page });
-export const loaded = (isLoaded) => ({type: LOADED, isLoaded})
+export const loaded = (isLoaded) => ({ type: LOADED, isLoaded });
 export default usersReducer;
