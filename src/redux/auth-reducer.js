@@ -1,3 +1,5 @@
+import { userAPI } from "../API/API";
+
 const SET_USER_DATA = "SET_USER_DATA";
 const LOADED = "LOADED";
 
@@ -35,5 +37,18 @@ export const loaded = (isLoaded) => ({
   type: LOADED,
   isLoaded,
 });
+
+export const getAuth = () => {
+  return (dispatch) => {
+    dispatch(loaded(true));
+    userAPI.getAuth().then((response) => {
+      if (response.resultCode === 0) {
+        let { id, email, login } = response.data;
+        dispatch(setAuthUserData(id, email, login));
+      }
+      dispatch(loaded(false));
+    });
+  };
+};
 
 export default authReducer;

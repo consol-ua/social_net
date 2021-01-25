@@ -1,37 +1,38 @@
+import { userAPI } from "../API/API";
+
 const ADD_NEW_POST_TEXT = "ADD_NEW_POST_TEXT";
 const ADD_NEW_MY_POST = "ADD_NEW_MY_POST";
-const SET_PROFILE = "SET_PROFILE"
-
+const SET_PROFILE = "SET_PROFILE";
 
 const initialState = {
-  logo:
+  defaultLogo:
     "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1000px-Apple_logo_black.svg.png",
   myPosts: [
     {
       id: 1,
       text: "Valera",
       img:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg"
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg",
     },
     {
       id: 2,
       text: "Dima",
       img:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg"
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg",
     },
     {
       id: 3,
       text: "Vika",
-      img: "https://ktonanovenkogo.ru/image/priroda-gora.jpg"
+      img: "https://ktonanovenkogo.ru/image/priroda-gora.jpg",
     },
     {
       id: 4,
       text: "Ania",
-      img: "https://ktonanovenkogo.ru/image/priroda-gora.jpg"
-    }
+      img: "https://ktonanovenkogo.ru/image/priroda-gora.jpg",
+    },
   ],
   newPostText: "Test post text",
-  usersProfile: null
+  usersProfile: null,
 };
 // const profileReduser = (state = initialState, action) => {
 
@@ -62,7 +63,7 @@ const profileReduser = (state = initialState, action) => {
     case ADD_NEW_POST_TEXT:
       return {
         ...state,
-        newPostText: action.text
+        newPostText: action.text,
       };
 
     case ADD_NEW_MY_POST:
@@ -70,28 +71,40 @@ const profileReduser = (state = initialState, action) => {
         ...state,
         myPosts: [
           ...state.myPosts,
-          { id: 5, img: state.logo, text: state.newPostText }
+          {
+            id: 5,
+            img: state.usersProfile.photos.small || state.defaultLogo,
+            text: state.newPostText,
+          },
         ],
-        newPostText: ""
+        newPostText: "",
       };
     case SET_PROFILE:
       return {
         ...state,
-        usersProfile: {...action.data}
-      }
+        usersProfile: { ...action.data },
+      };
 
     default:
       return state;
   }
 };
 
-
 export const addNewPostTextAction = (text) => ({
   type: ADD_NEW_POST_TEXT,
-  text
+  text,
 });
 export const addNewMyPost = () => ({
-  type: ADD_NEW_MY_POST
+  type: ADD_NEW_MY_POST,
 });
-export const setUserProfile = (data) => ({type: SET_PROFILE, data})
+export const setUserProfile = (data) => ({ type: SET_PROFILE, data });
+
+export const getUserProfile = (userId) => {
+  return (dispatch) => {
+    userAPI.getUserProfile(userId).then((response) => {
+      dispatch(setUserProfile(response));
+    });
+  };
+};
+
 export default profileReduser;

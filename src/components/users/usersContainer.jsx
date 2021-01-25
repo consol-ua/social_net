@@ -1,36 +1,38 @@
 import { connect } from "react-redux";
 import {
-  followOnClick,
-  setUsers,
-  unFollowOnClick,
-  setTotalUsersCount,
-  setCurrentPage,
-  loaded,
+  getUsersThunkCreator,
+  followSuccess,
+  unFollowSuccess,
 } from "../../redux/users-reduser";
 import React from "react";
 import Users from "./users";
-import { userAPI } from "../../API/API";
 
 class usersContainer extends React.Component {
   componentDidMount() {
-    this.props.loaded(true);
-    this.props.setCurrentPage(1);
-    userAPI
-      .getUsers(this.props.pageSize, this.props.currentPage)
-      .then((response) => {
-        this.props.setTotalUsersCount(response.totalCount);
-        this.props.setUsers(response.items);
-        this.props.loaded(false);
-      });
+    // this.props.loaded(true);
+    // this.props.setCurrentPage(1);
+    // userAPI
+    //   .getUsers(this.props.pageSize, this.props.currentPage)
+    //   .then((response) => {
+    //     this.props.setTotalUsersCount(response.totalCount);
+    //     this.props.setUsers(response.items);
+    //     this.props.loaded(false);
+    //   });
+    this.props.getUsersThunkCreator(
+      this.props.pageSize,
+      this.props.currentPage
+    );
   }
 
   onPageChanged = (pageNumber) => {
-    this.props.loaded(true);
-    userAPI.getUsers(this.props.pageSize, pageNumber).then((response) => {
-      this.props.setUsers(response.items);
-      this.props.setCurrentPage(pageNumber);
-      this.props.loaded(false);
-    });
+    // debugger;
+    this.props.getUsersThunkCreator(this.props.pageSize, pageNumber);
+    // this.props.loaded(true);
+    // userAPI.getUsers(this.props.pageSize, pageNumber).then((response) => {
+    //   this.props.setUsers(response.items);
+    //   this.props.setCurrentPage(pageNumber);
+    //   this.props.loaded(false);
+    // });
   };
 
   render() {
@@ -45,6 +47,7 @@ function mapStateToProps(state) {
     pageSize: state.usersPage.pageSize,
     currentPage: state.usersPage.currentPage,
     isLoaded: state.usersPage.isLoaded,
+    followingInProgress: state.usersPage.followingInProgress,
   };
 }
 // function mapDispatchToProps(dispatch) {
@@ -53,13 +56,9 @@ function mapStateToProps(state) {
 //     unFollowOnClick: (idUser) => dispatch(unFollowedCreator(idUser)),
 //     setUsers: (arr) => dispatch(setUsersCreator(arr))
 //   };
-// }
-
+//
 export default connect(mapStateToProps, {
-  followOnClick,
-  setUsers,
-  unFollowOnClick,
-  setTotalUsersCount,
-  setCurrentPage,
-  loaded,
+  getUsersThunkCreator,
+  followSuccess,
+  unFollowSuccess,
 })(usersContainer);

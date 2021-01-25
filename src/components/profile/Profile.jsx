@@ -1,7 +1,7 @@
 import React from "react";
 import MyPostsContainer from "./myPosts/myPostsContainer";
 import s from "./profile.module.css";
-import ProfileInfo from "./profileInfo/ProfoleInfo";
+import ProfileInfo from "./profileInfo/ProfileInfo";
 
 export default function Profile(props) {
   // console.log(props);

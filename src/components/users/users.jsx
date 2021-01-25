@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import Preloader from "../common/Preloader/Preloader";
 import s from "./users.module.css";
 import defaultPhoto from "../../assets/image/default_profile_photo.png";
-import { userAPI } from "../../API/API";
 
 export default function Users(props) {
   let renderUsers = () => {
@@ -27,24 +26,36 @@ export default function Users(props) {
           <div className={s.user__button}>
             {el.followed ? (
               <button
+                disabled={props.followingInProgress.some(
+                  (element) => element === el.id
+                )}
                 onClick={() => {
-                  userAPI.delFollowUser(el.id).then((response) => {
-                    if (response.resultCode === 0) {
-                      props.unFollowOnClick(el.id);
-                    }
-                  });
+                  props.unFollowSuccess(el.id);
+                  // props.toggleFollowingInProgress(true, el.id);
+                  // userAPI.delFollowUser(el.id).then((response) => {
+                  //   if (response.resultCode === 0) {
+                  //     props.unFollowOnClick(el.id);
+                  //   }
+                  //   props.toggleFollowingInProgress(false, el.id);
+                  // });
                 }}
               >
                 unfollowed
               </button>
             ) : (
               <button
+                disabled={props.followingInProgress.some(
+                  (element) => element === el.id
+                )}
                 onClick={() => {
-                  userAPI.postFollowUser(el.id).then((response) => {
-                    if (response.resultCode === 0) {
-                      props.followOnClick(el.id);
-                    }
-                  });
+                  props.followSuccess(el.id);
+                  // props.toggleFollowingInProgress(true, el.id);
+                  // userAPI.postFollowUser(el.id).then((response) => {
+                  //   if (response.resultCode === 0) {
+                  //     props.followOnClick(el.id);
+                  //   }
+                  //   props.toggleFollowingInProgress(false, el.id);
+                  // });
                 }}
               >
                 followed
