@@ -1,7 +1,13 @@
 import React from "react";
+import { FriendType } from "../../../redux/site-bar-reducer";
 import s from "./../sitebar.module.css";
 
-const FriendOnline = (props) => {
+
+type PropsType = {
+  state: Array<FriendType>
+}
+
+const FriendOnline: React.FC<PropsType> = (props) => {
   let friendEl = props.state.map((el) => {
     return (
       <div key={el.id} className={s.friendItem}>

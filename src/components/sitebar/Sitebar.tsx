@@ -2,8 +2,17 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "./sitebar.module.css";
 import FriendOnline from "./FriendOnline/FriendOnline";
+import { FriendType } from "../../redux/site-bar-reducer";
 
-export default function Sitebar(props) {
+type FriendOnlineType = {
+  FriendOnline: Array<FriendType>
+}
+
+type PropsType = {
+  state: FriendOnlineType
+}
+
+let Sitebar: React.FC<PropsType> = (props) => {
   return (
     <div className={s.sitebar}>
       <div className={s.link}>
@@ -30,3 +39,5 @@ export default function Sitebar(props) {
     </div>
   );
 }
+
+export default Sitebar

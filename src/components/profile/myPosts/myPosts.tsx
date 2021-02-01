@@ -1,9 +1,17 @@
 import React from "react";
+import { PostType } from "../../../redux/profile-reduser";
 import s from "./myPosts.module.css";
 import Post from "./Post/Post";
 
-export default function MyPosts(props) {
-  let updateText = React.createRef();
+type PropsType = {
+  myPosts: Array<PostType>
+  newPostText: string
+  onChangeText: (text: string) => void
+  addNewPostOnClick: () => void
+}
+
+let MyPosts: React.FC<PropsType> = (props) => {
+  let updateText: any = React.createRef();
 
   let postList = props.myPosts.map((el) => <Post key={el.id} state={el} />);
 
@@ -30,3 +38,4 @@ export default function MyPosts(props) {
     </div>
   );
 }
+export default MyPosts

@@ -1,8 +1,10 @@
 import { connect } from "react-redux";
 import {
   addNewMyPost,
-  addNewPostTextAction
+  addNewPostTextAction,
+  PostType
 } from "../../../redux/profile-reduser";
+import { GlobalStateType } from "../../../redux/redux-store";
 import MyPosts from "./myPosts";
 
 // export default function MyPostsContainer(props) {
@@ -26,19 +28,26 @@ import MyPosts from "./myPosts";
 //     />
 //   );
 // }
-
-function mapStateToProps(state) {
+type MapStateToPropsType = {
+  myPosts: Array<PostType>
+  newPostText: string
+}
+type MapDispatchToPropsType = {
+  addNewPostOnClick: () => void
+  onChangeText: (text: string) => void
+}
+function mapStateToProps(state: GlobalStateType): MapStateToPropsType {
   return {
     myPosts: state.profilePage.myPosts,
     newPostText: state.profilePage.newPostText
   };
 }
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: any): MapDispatchToPropsType {
   return {
     addNewPostOnClick: () => dispatch(addNewMyPost()),
     onChangeText: (text) => dispatch(addNewPostTextAction(text))
   };
 }
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+const MyPostsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, mapDispatchToProps)(MyPosts);
 export default MyPostsContainer;

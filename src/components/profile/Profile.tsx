@@ -3,7 +3,11 @@ import MyPostsContainer from "./myPosts/myPostsContainer";
 import s from "./profile.module.css";
 import ProfileInfo from "./profileInfo/ProfileInfo";
 
-export default function Profile(props) {
+type PropsType = {
+  profile: any
+}
+
+let Profile: React.FC<PropsType> = (props) => {
   // console.log(props);
   return (
     <div className={s.profile}>
@@ -12,3 +16,4 @@ export default function Profile(props) {
     </div>
   );
 }
+export default Profile

@@ -1,8 +1,11 @@
 import React from "react";
 import s from "./../dialogs.module.css";
 import { Route } from "react-router-dom";
-
-export default function Message(props) {
+type PropsType = {
+  id: number
+  text: string
+}
+let Message: React.FC<PropsType> = (props) => {
   // <Route path={`/${props.id}`} component={Message} />;
   // props => (<div className={s.dialog__message}>{props.text}</div>;)
   return (
@@ -12,3 +15,4 @@ export default function Message(props) {
     />
   );
 }
+export default Message

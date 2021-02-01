@@ -6,8 +6,26 @@ import {
 } from "../../redux/users-reduser";
 import React from "react";
 import Users from "./users";
+import { GlobalStateType } from "../../redux/redux-store";
 
-class usersContainer extends React.Component {
+type MapStateToPropsType = {
+  usersPageItems: any
+  totalUsersCount: number
+  pageSize: number
+  currentPage: number
+  isLoaded: boolean
+  followingInProgress: number[]
+}
+type MapDispatchToPropsType = {
+  getUsersThunkCreator: (pageSize: number, currentPage: number) => void
+  followSuccess: (userId: number) => void
+  unFollowSuccess: (userId: number) => void
+}
+
+
+type ProprsType = MapStateToPropsType & MapDispatchToPropsType
+
+class usersContainer extends React.Component<ProprsType> {
   componentDidMount() {
     // this.props.loaded(true);
     // this.props.setCurrentPage(1);
@@ -24,7 +42,7 @@ class usersContainer extends React.Component {
     );
   }
 
-  onPageChanged = (pageNumber) => {
+  onPageChanged = (pageNumber: number) => {
     // debugger;
     this.props.getUsersThunkCreator(this.props.pageSize, pageNumber);
     // this.props.loaded(true);
@@ -40,9 +58,9 @@ class usersContainer extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: GlobalStateType): MapStateToPropsType {
   return {
-    usersPage: state.usersPage,
+    usersPageItems: state.usersPage.items,
     totalUsersCount: state.usersPage.totalUsersCount,
     pageSize: state.usersPage.pageSize,
     currentPage: state.usersPage.currentPage,
@@ -57,7 +75,7 @@ function mapStateToProps(state) {
 //     setUsers: (arr) => dispatch(setUsersCreator(arr))
 //   };
 //
-export default connect(mapStateToProps, {
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, {
   getUsersThunkCreator,
   followSuccess,
   unFollowSuccess,

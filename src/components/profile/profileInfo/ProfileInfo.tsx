@@ -3,7 +3,11 @@ import s from "../profile.module.css";
 import defaultPhoto from "../../../assets/image/default_profile_photo.png";
 import Preloader from "../../common/Preloader/Preloader";
 
-export default function ProfileInfo(props) {
+type PropsType = {
+  state: any
+}
+
+let ProfileInfo: React.FC<PropsType> = (props) => {
   if (!props.state) {
     return <Preloader />;
   }
@@ -21,3 +25,4 @@ export default function ProfileInfo(props) {
     </div>
   );
 }
+export default ProfileInfo

@@ -1,4 +1,5 @@
-import * as axios from "axios";
+import axios from "axios";
+import { GetAuthType, GetUsersType } from "./ApiType";
 //test API server
 const instanse = axios.create({
   withCredentials: true,
@@ -9,19 +10,19 @@ const instanse = axios.create({
 export const userAPI = {
   getUsers(pageSize = 5, pageNumber = 1) {
     return instanse
-      .get(`users?count=${pageSize}&page=${pageNumber}`)
+      .get<GetUsersType>(`users?count=${pageSize}&page=${pageNumber}`)
       .then((response) => response.data);
   },
-  delFollowUser(id) {
+  delFollowUser(id: number) {
     return instanse.delete(`follow/${id}`).then((response) => response.data);
   },
-  postFollowUser(id) {
+  postFollowUser(id: number) {
     return instanse.post(`follow/${id}`).then((response) => response.data);
   },
-  getUserProfile(userId) {
+  getUserProfile(userId: number) {
     return instanse.get(`profile/${userId}`).then((response) => response.data);
   },
   getAuth() {
-    return instanse.get(`auth/me`).then((response) => response.data);
+    return instanse.get<GetAuthType>(`auth/me`).then((response) => response.data);
   },
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import s from "./Preloader.module.css";
 
-function Preloader(props) {
+function Preloader() {
   return (
     <div className={s.loader}>
       <svg

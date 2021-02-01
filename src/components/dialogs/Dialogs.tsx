@@ -2,8 +2,19 @@ import React from "react";
 import s from "./dialogs.module.css";
 import Dialog from "./dialog/dialog";
 import Message from "./message/message";
+import { MessageType, DialogType } from "../../redux/dialog-reducer";
 
-export default function Dialogs(props) {
+
+type PropsType = {
+  dialogData: Array<DialogType>
+  messageData: Array<MessageType>
+  newMessageText: string
+
+  addMessageOnClick: () => void
+  onChangeMassage: (text: string) => void
+}
+
+let Dialogs: React.FC<PropsType> = (props) => {
   let dialogEl = props.dialogData.map((el) => {
     return <Dialog key={el.name} name={el.name} id={el.id} img={el.img} />;
   });
@@ -11,14 +22,16 @@ export default function Dialogs(props) {
     return <Message key={el.text} text={el.text} id={el.id} />;
   });
 
-  let messageText = React.createRef();
+  let messageText: React.RefObject<HTMLTextAreaElement> = React.createRef();
 
   let addMessageOnClick = () => {
     props.addMessageOnClick();
   };
   let onChangeMassage = () => {
-    let textToAdd = messageText.current.value;
-    props.onChangeMassage(textToAdd);
+    let textToAdd = messageText.current?.value
+    if (textToAdd) {
+      props.onChangeMassage(textToAdd);
+    }
     // props.addNewMassageText(textToAdd);
   };
   return (
@@ -29,8 +42,8 @@ export default function Dialogs(props) {
         <div className={s.dialog__add}>
           <textarea
             ref={messageText}
-            cols="20"
-            rows="5"
+            cols={20}
+            rows={5}
             value={props.newMessageText}
             onChange={onChangeMassage}
           />
@@ -40,3 +53,5 @@ export default function Dialogs(props) {
     </div>
   );
 }
+
+export default Dialogs

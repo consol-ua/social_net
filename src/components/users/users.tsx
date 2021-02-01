@@ -4,14 +4,27 @@ import Preloader from "../common/Preloader/Preloader";
 import s from "./users.module.css";
 import defaultPhoto from "../../assets/image/default_profile_photo.png";
 
-export default function Users(props) {
+type PropsType = {
+  usersPageItems: any
+  totalUsersCount: number
+  pageSize: number
+  currentPage: number
+  isLoaded: boolean
+  followingInProgress: number[]
+  followSuccess: (userId: number) => void
+  unFollowSuccess: (userId: number) => void
+  onPageChanged: (pageNumber: number) => void
+
+}
+
+let Users: React.FC<PropsType> = (props) => {
   let renderUsers = () => {
-    return props.usersPage.items.map((el) => {
+    return props.usersPageItems.map((el: any) => {
       let userImg = el.photos.small
         ? el.photos.small
         : el.photos.large
-        ? el.photos.large
-        : defaultPhoto;
+          ? el.photos.large
+          : defaultPhoto;
       return (
         <div className={s.user} key={el.id}>
           <NavLink to={`/profile/${el.id}`} className={s.user__img}>
@@ -43,24 +56,24 @@ export default function Users(props) {
                 unfollowed
               </button>
             ) : (
-              <button
-                disabled={props.followingInProgress.some(
-                  (element) => element === el.id
-                )}
-                onClick={() => {
-                  props.followSuccess(el.id);
-                  // props.toggleFollowingInProgress(true, el.id);
-                  // userAPI.postFollowUser(el.id).then((response) => {
-                  //   if (response.resultCode === 0) {
-                  //     props.followOnClick(el.id);
-                  //   }
-                  //   props.toggleFollowingInProgress(false, el.id);
-                  // });
-                }}
-              >
-                followed
-              </button>
-            )}
+                <button
+                  disabled={props.followingInProgress.some(
+                    (element) => element === el.id
+                  )}
+                  onClick={() => {
+                    props.followSuccess(el.id);
+                    // props.toggleFollowingInProgress(true, el.id);
+                    // userAPI.postFollowUser(el.id).then((response) => {
+                    //   if (response.resultCode === 0) {
+                    //     props.followOnClick(el.id);
+                    //   }
+                    //   props.toggleFollowingInProgress(false, el.id);
+                    // });
+                  }}
+                >
+                  followed
+                </button>
+              )}
           </div>
         </div>
       );
@@ -125,3 +138,6 @@ export default function Users(props) {
     </div>
   );
 }
+
+
+export default Users
