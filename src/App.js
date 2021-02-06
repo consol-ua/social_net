@@ -7,6 +7,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import DialogsContainer from "./components/dialogs/DialogsContainer";
 import usersContainer from "./components/users/usersContainer";
 import ProfileContainer from "./components/profile/ProfileContainer";
+import LoginPage from "./components/Login/LoginPage";
 
 export default function App(props) {
   let state = props.store.getState();
@@ -19,9 +20,9 @@ export default function App(props) {
           path="/profile/:userId?"
           render={() => (
             <ProfileContainer
-              // store={props.store}
-              // state={state.profilePage}
-              // dispatch={props.state.dispatch}
+            // store={props.store}
+            // state={state.profilePage}
+            // dispatch={props.state.dispatch}
             />
           )}
         />
@@ -36,6 +37,7 @@ export default function App(props) {
           // )}
         />
         <Route path="/news" component={News} />
+        <Route path="/login" component={LoginPage} />
         <Route path="/users" component={usersContainer} />
         {/* <Profile /> */}
       </div>

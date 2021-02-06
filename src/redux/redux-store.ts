@@ -7,11 +7,11 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 
 let reducers = combineReducers({
+  auth: authReducer,
   dialogPage: dialogReducer,
   sitebarPage: siteBarReducer,
   profilePage: profileReduser,
   usersPage: usersReducer,
-  auth: authReducer,
 });
 
 type ReducersType = typeof reducers

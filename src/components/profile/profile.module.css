@@ -6,3 +6,10 @@
 .logo {
   width: 100px;
 }
+
+.profileInfo {
+  padding-bottom: 20px;
+}
+.profileInfo div {
+  margin: 5px;
+}

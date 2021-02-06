@@ -5,6 +5,7 @@ import { GlobalStateType } from "./redux-store";
 const ADD_NEW_POST_TEXT = "ADD_NEW_POST_TEXT";
 const ADD_NEW_MY_POST = "ADD_NEW_MY_POST";
 const SET_PROFILE = "SET_PROFILE";
+const EDIT_MODE = "EDIT_MODE";
 
 export type PostType = {
   id: number
@@ -15,19 +16,20 @@ type PhotosType = {
   small: string | null
   large: string | null
 }
-type ProfileType = {
+export type ProfileType = {
   userId: number
   lookingForAJob: boolean
   lookingForAJobDescription: string
   fullName: string
   contacts?: any
   photos: PhotosType
+  editMode?: boolean
 }
 type InitialStateType = {
   defaultLogo: string
   myPosts: Array<PostType>
   newPostText: string
-  usersProfile: any
+  usersProfile: ProfileType | any
 }
 
 const initialState: InitialStateType = {
@@ -58,7 +60,7 @@ const initialState: InitialStateType = {
     },
   ],
   newPostText: "Test post text",
-  usersProfile: null,
+  usersProfile: null
 };
 // const profileReduser = (state = initialState, action) => {
 
@@ -85,7 +87,7 @@ const initialState: InitialStateType = {
 //   }
 // };
 
-type ActionsType = AddNewPostTextActionType | addNewMyPostActionType | SetUserProfileActionType
+type ActionsType = AddNewPostTextActionType | addNewMyPostActionType | SetUserProfileActionType | EditModeType
 
 const profileReduser = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
@@ -102,7 +104,7 @@ const profileReduser = (state = initialState, action: ActionsType): InitialState
           ...state.myPosts,
           {
             id: 5,
-            img: state.usersProfile.photos.small || state.defaultLogo,
+            img: state.usersProfile?.photos.small || state.defaultLogo,
             text: state.newPostText,
           },
         ],
@@ -113,7 +115,14 @@ const profileReduser = (state = initialState, action: ActionsType): InitialState
         ...state,
         usersProfile: { ...action.data },
       };
-
+    case EDIT_MODE:
+      return {
+        ...state,
+        usersProfile: {
+          ...state.usersProfile,
+          editMode: action.editMode
+        }
+      };
     default:
       return state;
   }
@@ -129,6 +138,14 @@ export const addNewPostTextAction = (text: string): AddNewPostTextActionType => 
   text,
 });
 
+type EditModeType = {
+  type: typeof EDIT_MODE,
+  editMode: boolean
+}
+export const editMode = (edit: boolean): EditModeType => ({
+  type: EDIT_MODE,
+  editMode: edit
+});
 type addNewMyPostActionType = {
   type: typeof ADD_NEW_MY_POST
 }

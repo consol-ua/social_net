@@ -7,6 +7,8 @@ import {
 import React from "react";
 import Users from "./users";
 import { GlobalStateType } from "../../redux/redux-store";
+import { compose } from "redux";
+import { WithAuthRedirect } from "../../Hoc/WithAuthRedirect";
 
 type MapStateToPropsType = {
   usersPageItems: any
@@ -75,8 +77,9 @@ function mapStateToProps(state: GlobalStateType): MapStateToPropsType {
 //     setUsers: (arr) => dispatch(setUsersCreator(arr))
 //   };
 //
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, {
-  getUsersThunkCreator,
-  followSuccess,
-  unFollowSuccess,
-})(usersContainer);
+export default compose(
+  connect<MapStateToPropsType, MapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, {
+    getUsersThunkCreator,
+    followSuccess,
+    unFollowSuccess,
+  }), WithAuthRedirect)(usersContainer);
