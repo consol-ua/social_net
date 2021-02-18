@@ -8,6 +8,7 @@ type PropsType = {
   login: string | null
   isLoaded: boolean
   id: number | null
+  unAuthorization: () => void
 }
 
 let Login: React.FC<PropsType> = (props) => {
@@ -17,11 +18,14 @@ let Login: React.FC<PropsType> = (props) => {
       {!props.isAuth ? (
         <NavLink to={"/login"}>Login</NavLink>
       ) : (
+        <div>
           <NavLink to={"/profile/"}>
             <div>Login: {props.login}</div>
             <div>id: {props.id}</div>
           </NavLink>
-        )}
+          <button onClick={props.unAuthorization}>exit</button>
+        </div>
+      )}
     </div>
   );
 }

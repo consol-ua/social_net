@@ -1,7 +1,23 @@
 .loginContainer {
   background: red;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
+  font-size: 20px;
+}
+.loginFormform {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 5px;
+}
+.loginForm label {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+.loginForm label:nth-last-child(2) {
+  justify-content: center;
 }

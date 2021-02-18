@@ -1,7 +1,6 @@
 import Dialogs from "./Dialogs";
 import {
   addMessageActionCreator,
-  addNewMessageTextActionCreator,
   DialogType,
   MessageType
 } from "../../redux/dialog-reducer";
@@ -9,8 +8,7 @@ import { connect } from "react-redux";
 import { GlobalStateType } from "../../redux/redux-store";
 
 export type DialogMapDispatchToPropsType = {
-  addMessageOnClick: () => void
-  onChangeMassage: (text: string) => void
+  addMessageOnClick: (message: string) => void
 }
 
 export type DialogMapStateToPropsType = {
@@ -29,8 +27,7 @@ function mapStateToProps(state: GlobalStateType): DialogMapStateToPropsType {
 
 function mapDispatchToProps(dispatch: any): DialogMapDispatchToPropsType {
   return {
-    addMessageOnClick: () => dispatch(addMessageActionCreator()),
-    onChangeMassage: (text) => dispatch(addNewMessageTextActionCreator(text))
+    addMessageOnClick: (message) => dispatch(addMessageActionCreator(message)),
   };
 }
 

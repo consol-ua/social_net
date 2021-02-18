@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import {
   addNewMyPost,
-  addNewPostTextAction,
   PostType
 } from "../../../redux/profile-reduser";
 import { GlobalStateType } from "../../../redux/redux-store";
@@ -30,22 +29,18 @@ import MyPosts from "./myPosts";
 // }
 type MapStateToPropsType = {
   myPosts: Array<PostType>
-  newPostText: string
 }
 type MapDispatchToPropsType = {
-  addNewPostOnClick: () => void
-  onChangeText: (text: string) => void
+  addNewPostOnClick: (text: string) => void
 }
 function mapStateToProps(state: GlobalStateType): MapStateToPropsType {
   return {
-    myPosts: state.profilePage.myPosts,
-    newPostText: state.profilePage.newPostText
+    myPosts: state.profilePage.myPosts
   };
 }
 function mapDispatchToProps(dispatch: any): MapDispatchToPropsType {
   return {
-    addNewPostOnClick: () => dispatch(addNewMyPost()),
-    onChangeText: (text) => dispatch(addNewPostTextAction(text))
+    addNewPostOnClick: (text) => dispatch(addNewMyPost(text)),
   };
 }
 

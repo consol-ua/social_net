@@ -1,40 +1,45 @@
 import React from "react";
+import { Form, Field } from "react-final-form";
 import { PostType } from "../../../redux/profile-reduser";
 import s from "./myPosts.module.css";
 import Post from "./Post/Post";
 
 type PropsType = {
   myPosts: Array<PostType>
-  newPostText: string
-  onChangeText: (text: string) => void
-  addNewPostOnClick: () => void
+  addNewPostOnClick: (text: string) => void
+}
+
+type MyPostFormPropsType = {
+  onSubmit: (value: string) => void
+}
+
+let MyPostForm: React.FC<MyPostFormPropsType> = (props) => {
+  return (
+    <Form
+      // onSubmit={props.onSubmit}
+      onSubmit={(value) => props.onSubmit(value.newPostText)}
+      initialValues={{ newPostText: "" }}
+      render={({ handleSubmit, submitting, pristine }) => (
+        <form onSubmit={handleSubmit}>
+          <Field name="newPostText" component="textarea" />
+          <button disabled={submitting || pristine}>Send</button>
+        </form>
+      )}
+    />
+  )
 }
 
 let MyPosts: React.FC<PropsType> = (props) => {
-  let updateText: any = React.createRef();
-
-  let postList = props.myPosts.map((el) => <Post key={el.id} state={el} />);
-
-  let onChangeText = () => {
-    props.onChangeText(updateText.current.value);
-    // props.dispatch(addNewPostTextAction(updateText.current.value));
-  };
-  let addNewPostOnClick = () => {
-    props.addNewPostOnClick();
-    // props.dispatch(addNewMyPost());
+  let addNewPostOnClick = (value: string) => {
+    props.addNewPostOnClick(value);
   };
 
   return (
     <div className={s.posts}>
       <div className={s.posts__form}>
-        <textarea
-          ref={updateText}
-          value={props.newPostText}
-          onChange={onChangeText}
-        />
-        <button onClick={addNewPostOnClick}>Send</button>
+        <MyPostForm onSubmit={addNewPostOnClick} />
       </div>
-      <div className={s.posts__items}>{postList}</div>
+      <div className={s.posts__items}>{props.myPosts.map((el) => <Post key={el.id} state={el} />)}</div>
     </div>
   );
 }

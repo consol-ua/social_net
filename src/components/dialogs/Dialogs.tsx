@@ -3,15 +3,33 @@ import s from "./dialogs.module.css";
 import Dialog from "./dialog/dialog";
 import Message from "./message/message";
 import { MessageType, DialogType } from "../../redux/dialog-reducer";
+import { Field, Form } from "react-final-form";
 
 
 type PropsType = {
   dialogData: Array<DialogType>
   messageData: Array<MessageType>
   newMessageText: string
+  addMessageOnClick: (message: string) => void
+}
 
-  addMessageOnClick: () => void
-  onChangeMassage: (text: string) => void
+type DialogFormPropsType = {
+  onSubmit: (message: string) => void
+}
+
+let DialogsForm: React.FC<DialogFormPropsType> = (props) => {
+  return (
+    <Form
+      onSubmit={(values) => props.onSubmit(values.messageText)}
+      initialValues={{ messgeText: "" }}
+      render={({ handleSubmit, pristine, submitting }) => (
+        <form onSubmit={handleSubmit}>
+          <Field component="textarea" name="messageText" />
+          <button disabled={submitting || pristine}>Отправить</button>
+        </form>
+      )}
+    />
+  )
 }
 
 let Dialogs: React.FC<PropsType> = (props) => {
@@ -22,32 +40,17 @@ let Dialogs: React.FC<PropsType> = (props) => {
     return <Message key={el.text} text={el.text} id={el.id} />;
   });
 
-  let messageText: React.RefObject<HTMLTextAreaElement> = React.createRef();
+  let addMessageOnClick = (messageText: string) => {
+    props.addMessageOnClick(messageText);
+  };
 
-  let addMessageOnClick = () => {
-    props.addMessageOnClick();
-  };
-  let onChangeMassage = () => {
-    let textToAdd = messageText.current?.value
-    if (textToAdd) {
-      props.onChangeMassage(textToAdd);
-    }
-    // props.addNewMassageText(textToAdd);
-  };
   return (
     <div className={s.dialog}>
       <div className={s.dialog__items}>{dialogEl}</div>
       <div className={s.dialog__messages}>
         <div>{messageEl}</div>
         <div className={s.dialog__add}>
-          <textarea
-            ref={messageText}
-            cols={20}
-            rows={5}
-            value={props.newMessageText}
-            onChange={onChangeMassage}
-          />
-          <button onClick={addMessageOnClick}>Отправить</button>
+          <DialogsForm onSubmit={addMessageOnClick} />
         </div>
       </div>
     </div>

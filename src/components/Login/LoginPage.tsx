@@ -3,16 +3,26 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { GlobalStateType } from "../../redux/redux-store";
 import s from "./loginpage.module.css";
-type isAuth = {
-  isAuth: boolean
+import LoginForm from "./LoginForm";
+import { authorization } from "../../redux/auth-reducer";
+
+type authData = {
+  email: string, password: string, rememberMe: boolean
 }
-const LoginPage: React.FC<isAuth> = (props) => {
+type PropsType = {
+  isAuth: boolean
+  authorization: (data: authData) => void
+}
+
+const LoginPage: React.FC<PropsType> = (props) => {
+  // const onSubmit = (value: any) => console.log(props);
   if (props.isAuth) {
     return <Redirect to={'/profile'} />
   }
   return (
     <div className={s.loginContainer}>
-      Please enter your login
+      <h1>Login</h1>
+      <LoginForm onSubmit={props.authorization} />
     </div>
   );
 }
@@ -20,4 +30,4 @@ const LoginPage: React.FC<isAuth> = (props) => {
 let mapStateToProps = (state: GlobalStateType) => ({
   isAuth: state.auth.isAuth
 })
-export default connect(mapStateToProps)(LoginPage)
+export default connect(mapStateToProps, { authorization })(LoginPage)

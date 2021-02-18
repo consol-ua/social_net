@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getAuth } from "../../../redux/auth-reducer";
+import { getAuth, unAuthorization } from "../../../redux/auth-reducer";
 import { GlobalStateType } from "../../../redux/redux-store";
 
 import Login from "./Login";
@@ -14,6 +14,7 @@ type MapStateToPropsType = {
 
 type MapDispatchToPropsType = {
   getAuth: () => void
+  unAuthorization: () => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -36,4 +37,5 @@ const mapStateToProps = (state: GlobalStateType): MapStateToPropsType => ({
 
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, {
   getAuth,
+  unAuthorization
 })(LoginContainer);

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { GetAuthType, GetUsersType } from "./ApiType";
+// AM_BgcXnCLxXsK3
 //test API server
 const instanse = axios.create({
   withCredentials: true,
@@ -25,4 +26,14 @@ export const userAPI = {
   getAuth() {
     return instanse.get<GetAuthType>(`auth/me`).then((response) => response.data);
   },
+
 };
+
+export const authAPI = {
+  login(email: string, password: string, rememberMe: boolean) {
+    return instanse.post(`/auth/login`, { email, password, rememberMe }).then((res) => res.data);
+  },
+  unLogin() {
+    return instanse.delete(`/auth/login`).then((res) => res.data);
+  }
+}

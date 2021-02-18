@@ -17,7 +17,6 @@ const Status = (props: statusPropsType) => {
     setState({ ...state, localEditMode: false })
   }
 
-  console.log(state)
   return <div>
     {!state.localEditMode ?
       <span onDoubleClick={activeLocalEditMode}>{props.status ? props.status : 'default status'}</span> :

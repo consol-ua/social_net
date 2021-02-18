@@ -1,13 +1,10 @@
 const ADD_MESSAGE = "ADD_MESSAGE";
-const ADD_NEW_MESSAGE_TEXT = "ADD_NEW_MESSAGE_TEXT";
 
 type AddMessageActionType = {
   type: typeof ADD_MESSAGE
+  message: string
 }
-type AddTextActionType = {
-  type: typeof ADD_NEW_MESSAGE_TEXT
-  text: string
-}
+
 export type DialogType = {
   id: number
   name: string
@@ -22,14 +19,10 @@ type InitialStateType = {
   messageData: Array<MessageType>
   newMessageText: string
 }
-type ActionType = AddMessageActionType | AddTextActionType
+type ActionType = AddMessageActionType
 
-export const addMessageActionCreator = (): AddMessageActionType => ({ type: ADD_MESSAGE });
+export const addMessageActionCreator = (message: string): AddMessageActionType => ({ type: ADD_MESSAGE, message });
 
-export const addNewMessageTextActionCreator = (text: string): AddTextActionType => ({
-  type: ADD_NEW_MESSAGE_TEXT,
-  text
-});
 const initialState: InitialStateType = {
   dialogData: [
     {
@@ -70,15 +63,9 @@ const dialogReducer = (state = initialState, action: ActionType): InitialStateTy
         ...state,
         messageData: [
           ...state.messageData,
-          { id: 1, text: state.newMessageText }
+          { id: 1, text: action.message }
         ],
         newMessageText: ""
-      };
-
-    case ADD_NEW_MESSAGE_TEXT:
-      return {
-        ...state,
-        newMessageText: action.text
       };
 
     default:
