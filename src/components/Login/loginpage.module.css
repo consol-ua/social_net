@@ -17,7 +17,18 @@
   display: flex;
   justify-content: space-between;
   margin: 10px;
+  position: relative;
 }
 .loginForm label:nth-last-child(2) {
   justify-content: center;
+}
+.errorMessage {
+  position: absolute;
+  width: max-content;
+  left: 103%;
+  top: 0;
+  color: blue;
+}
+.errorInput {
+  border: 2px solid blue;
 }

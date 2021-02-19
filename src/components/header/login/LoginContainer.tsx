@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getAuth, unAuthorization } from "../../../redux/auth-reducer";
+import { unAuthorization } from "../../../redux/auth-reducer";
 import { GlobalStateType } from "../../../redux/redux-store";
 
 import Login from "./Login";
@@ -13,16 +13,13 @@ type MapStateToPropsType = {
 }
 
 type MapDispatchToPropsType = {
-  getAuth: () => void
   unAuthorization: () => void
 }
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
 class LoginContainer extends React.Component<PropsType> {
-  componentDidMount() {
-    this.props.getAuth();
-  }
+
   render() {
     return <Login {...this.props} />;
   }
@@ -36,6 +33,5 @@ const mapStateToProps = (state: GlobalStateType): MapStateToPropsType => ({
 });
 
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, {
-  getAuth,
   unAuthorization
 })(LoginContainer);

@@ -5,6 +5,7 @@ import siteBarReducer from "./site-bar-reducer";
 import usersReducer from "./users-reduser";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
+import appReducer from "./app-reduser";
 
 let reducers = combineReducers({
   auth: authReducer,
@@ -12,6 +13,7 @@ let reducers = combineReducers({
   sitebarPage: siteBarReducer,
   profilePage: profileReduser,
   usersPage: usersReducer,
+  app: appReducer
 });
 
 type ReducersType = typeof reducers

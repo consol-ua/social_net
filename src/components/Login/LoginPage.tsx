@@ -11,6 +11,7 @@ type authData = {
 }
 type PropsType = {
   isAuth: boolean
+  errorAuth: string
   authorization: (data: authData) => void
 }
 
@@ -22,12 +23,13 @@ const LoginPage: React.FC<PropsType> = (props) => {
   return (
     <div className={s.loginContainer}>
       <h1>Login</h1>
-      <LoginForm onSubmit={props.authorization} />
+      <LoginForm onSubmit={props.authorization} errorAuth={props.errorAuth} />
     </div>
   );
 }
 
 let mapStateToProps = (state: GlobalStateType) => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  errorAuth: state.auth.errorAuth
 })
 export default connect(mapStateToProps, { authorization })(LoginPage)

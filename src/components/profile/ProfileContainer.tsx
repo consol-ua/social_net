@@ -24,13 +24,13 @@ type PropsType = MapDispatchToPropsType & MapStateToPropsType & RouteComponentPr
 class ProfileContainer extends React.Component<PropsType> {
   componentDidMount() {
     let userId: any = this.props.match.params.userId;
-    if (!userId) {
-      if (this.props.auth) {
-        userId = this.props.authUser;
-      } else {
-        userId = 12999;
-      }
+    if (userId) {
       this.props.getUserProfile(Number(userId));
+    } else if (this.props.auth) {
+      userId = this.props.authUser;
+      this.props.getUserProfile(Number(userId));
+    } else {
+      alert('ERROR PROFILE')
     }
   }
 
@@ -43,7 +43,7 @@ class ProfileContainer extends React.Component<PropsType> {
 let mapStateToProps = (state: GlobalStateType): MapStateToPropsType => ({
   profile: state.profilePage,
   auth: state.auth.isAuth,
-  authUser: state.auth.id,
+  authUser: state.auth.id
 });
 
 export default compose(
