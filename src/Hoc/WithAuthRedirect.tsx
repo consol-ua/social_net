@@ -6,9 +6,9 @@ type isAuth = {
   isAuth: boolean
 }
 export function WithAuthRedirect(WrappedComponent: React.ElementType) {
-  class RedirectComponent extends React.Component<isAuth> {
+  class RedirectComponent extends React.Component<any> {
     render() {
-      return !this.props.isAuth ? (
+      return !this.props.isAuth && !this.props.match.params.userId ? (
         <Redirect to={"/login"} />
       ) : (
         <WrappedComponent {...this.props} />

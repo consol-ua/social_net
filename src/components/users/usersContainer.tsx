@@ -8,7 +8,6 @@ import React from "react";
 import Users from "./users";
 import { GlobalStateType } from "../../redux/redux-store";
 import { compose } from "redux";
-import { WithAuthRedirect } from "../../Hoc/WithAuthRedirect";
 
 type MapStateToPropsType = {
   usersPageItems: any
@@ -82,4 +81,4 @@ export default compose(
     getUsersThunkCreator,
     followSuccess,
     unFollowSuccess,
-  }), WithAuthRedirect)(usersContainer);
+  }))(usersContainer);

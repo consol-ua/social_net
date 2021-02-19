@@ -17,6 +17,7 @@ function App(props) {
   let state = props.state;
   useEffect(() => {
     props.initialazed();
+    console.log(1);
   }, []);
 
   if (!state.app.inititalazed) {

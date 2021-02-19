@@ -6,6 +6,8 @@ import {
 } from "../../redux/dialog-reducer";
 import { connect } from "react-redux";
 import { GlobalStateType } from "../../redux/redux-store";
+import { compose } from "redux";
+import { WithAuthRedirect } from "../../Hoc/WithAuthRedirect";
 
 export type DialogMapDispatchToPropsType = {
   addMessageOnClick: (message: string) => void
@@ -32,6 +34,7 @@ function mapDispatchToProps(dispatch: any): DialogMapDispatchToPropsType {
 }
 
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+const DialogsContainer = compose(connect(mapStateToProps, mapDispatchToProps), WithAuthRedirect)
+  (Dialogs);
 // const DialogsContainer = connect<DialogMapStateToPropsType, DialogMapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, mapDispatchToProps)(Dialogs);
 export default DialogsContainer;
