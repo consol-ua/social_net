@@ -1,6 +1,6 @@
 export type GetUsersType = {
   items: Array<UsersType>
-  totalCount: number | null
+  totalCount: number
   error: string | null
 }
 export type UserPhotosType = {
@@ -15,6 +15,30 @@ export type UsersType = {
   followed: boolean
 }
 
+export type PostDelFollowUserType = {
+  resultCode: number
+  messages: Array<string>,
+  data: any
+}
+export type PostDelLoginType = {
+  resultCode: number
+  messages: Array<string>,
+  data: any
+}
+
+type PhotosType = {
+  small: string | null
+  large: string | null
+}
+export type GetProfileUser = {
+  aboutMe: string | null
+  userId: number
+  lookingForAJob: boolean
+  lookingForAJobDescription: string | null
+  fullName: string
+  contacts?: any
+  photos: PhotosType
+}
 
 export enum AuthResultCodeEnum {
   Success = 0,

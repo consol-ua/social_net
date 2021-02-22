@@ -12,7 +12,6 @@ import { WithAuthRedirect } from "../../Hoc/WithAuthRedirect";
 export type DialogMapDispatchToPropsType = {
   addMessageOnClick: (message: string) => void
 }
-
 export type DialogMapStateToPropsType = {
   dialogData: DialogType[]
   messageData: MessageType[]
@@ -33,8 +32,6 @@ function mapDispatchToProps(dispatch: any): DialogMapDispatchToPropsType {
   };
 }
 
-
-const DialogsContainer = compose(connect(mapStateToProps, mapDispatchToProps), WithAuthRedirect)
-  (Dialogs);
-// const DialogsContainer = connect<DialogMapStateToPropsType, DialogMapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, mapDispatchToProps)(Dialogs);
+const DialogsContainer = compose(connect(mapStateToProps, mapDispatchToProps),
+  WithAuthRedirect)(Dialogs);
 export default DialogsContainer;

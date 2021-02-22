@@ -10,13 +10,11 @@ type PropsType = {
   errorAuth: string
 }
 const LoginForm: React.FC<PropsType> = (props) => {
-  // const onSubmit = (value) => console.log(value);
   const required = (value: any) => value ? undefined : "Enter email"
   const minValue = (min: number) => (value: string) =>
     value.length >= min ? undefined : `Min length ${min}`
   const composeValidators = (...validators: any) => (value: any) =>
     validators.reduce((error: any, validator: any) => error || validator(value), undefined)
-
   return (
     <Form
       onSubmit={props.onSubmit}
@@ -41,29 +39,16 @@ const LoginForm: React.FC<PropsType> = (props) => {
                 <div>
                   <input {...input} type="password" placeholder="password" className={((meta.error && meta.touched) ? s.errorInput : '')} />
                   {meta.error && meta.touched && <span className={s.errorMessage}>{meta.error}</span>}
-
                 </div>
               </label>
             )}
           </Field>
-          {/* <label>
-            <span>password: </span>
-            <Field
-              name="password"
-              component="input"
-              type="password"
-              placeholder="password"
-            /> */}
-          {/* <input type="password" /> */}
-          {/* </label> */}
           <label>
             <span>rememberMe: </span>
             <Field name="rememberMe" component="input" type="checkbox" />
             {/* <input type="checkbox" /> */}
             {props.errorAuth && <span className={s.errorMessage}>{props.errorAuth}</span>}
           </label>
-          {/* <span>{error}</span> */}
-
           <button type="submit" disabled={submitting || pristine}>
             login
           </button>

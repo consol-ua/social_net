@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 type statusPropsType = {
   status: string,
@@ -10,6 +10,9 @@ const Status = (props: statusPropsType) => {
   // const editStatus = (edit: boolean) => {
   //   props.onEditMode(edit)
   // }
+  useEffect(() => {
+    setState({ statusText: props.status, localEditMode: false })
+  }, [props.status])
   const activeLocalEditMode = () => {
     setState({ ...state, localEditMode: true })
   }

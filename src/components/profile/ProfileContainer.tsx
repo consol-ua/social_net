@@ -34,8 +34,7 @@ class ProfileContainer extends React.Component<PropsType> {
     }
   }
 
-  render() {
-
+  render(): JSX.Element {
     return <Profile {...this.props} />
   }
 }
@@ -50,8 +49,4 @@ export default compose(
   connect(mapStateToProps, { getUserProfile, editMode }),
   withRouter,
   WithAuthRedirect)(ProfileContainer)
-// let WithUrlDataContainer = withRouter(ProfileContainer);
 
-// export default connect(mapStateToProps, {
-//   getUserProfile,
-// })(WithUrlDataContainer);

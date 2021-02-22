@@ -6,7 +6,7 @@ import ProfileInfo from "./profileInfo/ProfileInfo";
 type PropsType = any
 
 let Profile: React.FC<PropsType> = (props) => {
-  // console.log(props);
+
   return (
     <div className={s.profile}>
       <ProfileInfo state={props.profile.usersProfile} onEditMode={props.editMode} />

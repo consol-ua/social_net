@@ -16,7 +16,6 @@ type PropsType = {
 }
 
 const LoginPage: React.FC<PropsType> = (props) => {
-  // const onSubmit = (value: any) => console.log(props);
   if (props.isAuth) {
     return <Redirect to={'/profile'} />
   }

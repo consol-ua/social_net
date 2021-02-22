@@ -16,6 +16,7 @@ type MapStateToPropsType = {
   currentPage: number
   isLoaded: boolean
   followingInProgress: number[]
+  auth: boolean
 }
 type MapDispatchToPropsType = {
   getUsersThunkCreator: (pageSize: number, currentPage: number) => void
@@ -23,20 +24,10 @@ type MapDispatchToPropsType = {
   unFollowSuccess: (userId: number) => void
 }
 
-
 type ProprsType = MapStateToPropsType & MapDispatchToPropsType
 
 class usersContainer extends React.Component<ProprsType> {
   componentDidMount() {
-    // this.props.loaded(true);
-    // this.props.setCurrentPage(1);
-    // userAPI
-    //   .getUsers(this.props.pageSize, this.props.currentPage)
-    //   .then((response) => {
-    //     this.props.setTotalUsersCount(response.totalCount);
-    //     this.props.setUsers(response.items);
-    //     this.props.loaded(false);
-    //   });
     this.props.getUsersThunkCreator(
       this.props.pageSize,
       this.props.currentPage
@@ -44,14 +35,7 @@ class usersContainer extends React.Component<ProprsType> {
   }
 
   onPageChanged = (pageNumber: number) => {
-    // debugger;
     this.props.getUsersThunkCreator(this.props.pageSize, pageNumber);
-    // this.props.loaded(true);
-    // userAPI.getUsers(this.props.pageSize, pageNumber).then((response) => {
-    //   this.props.setUsers(response.items);
-    //   this.props.setCurrentPage(pageNumber);
-    //   this.props.loaded(false);
-    // });
   };
 
   render() {
@@ -67,15 +51,9 @@ function mapStateToProps(state: GlobalStateType): MapStateToPropsType {
     currentPage: state.usersPage.currentPage,
     isLoaded: state.usersPage.isLoaded,
     followingInProgress: state.usersPage.followingInProgress,
+    auth: state.auth.isAuth
   };
 }
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     followOnClick: (idUser) => dispatch(followedCreator(idUser)),
-//     unFollowOnClick: (idUser) => dispatch(unFollowedCreator(idUser)),
-//     setUsers: (arr) => dispatch(setUsersCreator(arr))
-//   };
-//
 export default compose(
   connect<MapStateToPropsType, MapDispatchToPropsType, {}, GlobalStateType>(mapStateToProps, {
     getUsersThunkCreator,

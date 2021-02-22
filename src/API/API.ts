@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetAuthType, GetUsersType } from "./ApiType";
+import { GetAuthType, GetProfileUser, GetUsersType, PostDelFollowUserType, PostDelLoginType } from "./ApiType";
 // AM_BgcXnCLxXsK3
 //test API server
 const instanse = axios.create({
@@ -15,13 +15,13 @@ export const userAPI = {
       .then((response) => response.data);
   },
   delFollowUser(id: number) {
-    return instanse.delete(`follow/${id}`).then((response) => response.data);
+    return instanse.delete<PostDelFollowUserType>(`follow/${id}`).then((response) => response.data);
   },
   postFollowUser(id: number) {
-    return instanse.post(`follow/${id}`).then((response) => response.data);
+    return instanse.post<PostDelFollowUserType>(`follow/${id}`).then((response) => response.data);
   },
   getUserProfile(userId: number) {
-    return instanse.get(`profile/${userId}`).then((response) => response.data);
+    return instanse.get<GetProfileUser>(`profile/${userId}`).then((response) => response.data);
   },
   getAuth() {
     return instanse.get<GetAuthType>(`auth/me`).then((response) => response.data);
@@ -31,9 +31,9 @@ export const userAPI = {
 
 export const authAPI = {
   login(email: string, password: string, rememberMe: boolean) {
-    return instanse.post(`/auth/login`, { email, password, rememberMe }).then((res) => res.data);
+    return instanse.post<PostDelLoginType>(`/auth/login`, { email, password, rememberMe }).then((res) => res.data);
   },
   unLogin() {
-    return instanse.delete(`/auth/login`).then((res) => res.data);
+    return instanse.delete<PostDelLoginType>(`/auth/login`).then((res) => res.data);
   }
 }

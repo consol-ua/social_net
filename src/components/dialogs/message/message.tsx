@@ -6,8 +6,6 @@ type PropsType = {
   text: string
 }
 let Message: React.FC<PropsType> = (props) => {
-  // <Route path={`/${props.id}`} component={Message} />;
-  // props => (<div className={s.dialog__message}>{props.text}</div>;)
   return (
     <Route
       path={`/dialog/${props.id}`}

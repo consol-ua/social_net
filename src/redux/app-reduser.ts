@@ -35,11 +35,9 @@ export const setAuthUserData = (): InitType => ({
 
 type CastomThunkType = ThunkAction<void, GlobalStateType, unknown, ActionType>
 
-export const initialazed = (): CastomThunkType => (dispatch: any) => {
-  const getAuthPromis = dispatch(getAuth())
-  getAuthPromis.then(() => dispatch(setAuthUserData()))
-
-
+export const initialazed = (): CastomThunkType => async (dispatch: any) => {
+  await dispatch(getAuth())
+  dispatch(setAuthUserData())
 }
 
 export default appReducer;

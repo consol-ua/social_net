@@ -18,7 +18,7 @@ function App(props) {
   useEffect(() => {
     props.initialazed();
     console.log(1);
-  }, []);
+  }, [state.app.initialazed]);
 
   if (!state.app.inititalazed) {
     return <Preloader />;
@@ -27,30 +27,11 @@ function App(props) {
     <div className="App">
       <Header />
       <Sitebar state={state.sitebarPage} />
-      <Route
-        path="/profile/:userId?"
-        render={() => (
-          <ProfileContainer
-          // store={props.store}
-          // state={state.profilePage}
-          // dispatch={props.state.dispatch}
-          />
-        )}
-      />
-      <Route
-        path="/dialog"
-        component={DialogsContainer}
-        // render={() => (
-        //   <DialogsContainer
-        //   // store={props.store}
-        //   // state={state.dialogPage} dispatch={props.store.dispatch}
-        //   />
-        // )}
-      />
+      <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+      <Route path="/dialog" component={DialogsContainer} />
       <Route path="/news" component={News} />
       <Route path="/login" component={LoginPage} />
       <Route path="/users" component={usersContainer} />
-      {/* <Profile /> */}
     </div>
   );
 }

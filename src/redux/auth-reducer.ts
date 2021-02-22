@@ -42,7 +42,7 @@ const initialState: InitialStateType = {
   login: null,
   isLoaded: false,
   isAuth: false,
-  errorAuth: ''
+  errorAuth: ""
 };
 const authReducer = (state = initialState, action: ActionType): InitialStateType => {
   switch (action.type) {
@@ -50,7 +50,7 @@ const authReducer = (state = initialState, action: ActionType): InitialStateType
       return {
         ...state,
         ...action.data,
-        errorAuth: ''
+        errorAuth: ""
       };
     case LOADED:
       return {
@@ -68,10 +68,12 @@ const authReducer = (state = initialState, action: ActionType): InitialStateType
 };
 
 
-export const setAuthUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean): SetAuthUserDataActionType => ({
-  type: SET_USER_DATA,
-  data: { id, email, login, isAuth },
-});
+export const setAuthUserData = (
+  id: number | null, email: string | null,
+  login: string | null, isAuth: boolean): SetAuthUserDataActionType => ({
+    type: SET_USER_DATA,
+    data: { id, email, login, isAuth },
+  });
 
 export const loaded = (isLoaded: boolean): LoadedActionType => ({
   type: LOADED,
@@ -84,17 +86,15 @@ export const errorAuth = (errorAuth: string): ErrorAuthType => ({
 
 type CastomThunkType = ThunkAction<void, GlobalStateType, unknown, ActionType>
 export const getAuth = (): CastomThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(loaded(true));
-    return userAPI.getAuth().then((response) => {
-      if (response.resultCode === AuthResultCodeEnum.Success) {
-        let { id, email, login } = response.data;
-        dispatch(setAuthUserData(id, email, login, true));
-      }
-      dispatch(loaded(false));
-    });
+    const response = await userAPI.getAuth()
+    if (response.resultCode === AuthResultCodeEnum.Success) {
+      let { id, email, login } = response.data;
+      dispatch(setAuthUserData(id, email, login, true));
+    }
+    dispatch(loaded(false));
   };
-
 };
 
 type authData = {
@@ -102,33 +102,28 @@ type authData = {
 }
 
 export const authorization = (data: authData): CastomThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(loaded(true));
-    authAPI.login(data.email, data.password, data.rememberMe).then((res) => {
-      if (res.resultCode === AuthResultCodeEnum.Success) {
-        dispatch(getAuth())
-      } else {
-        dispatch(errorAuth(res.messages.join()))
-      }
+    const res = await authAPI.login(data.email, data.password, data.rememberMe)
+    if (res.resultCode === AuthResultCodeEnum.Success) {
+      dispatch(getAuth())
+    } else {
+      dispatch(errorAuth(res.messages.join()))
       dispatch(loaded(false))
-    })
+    }
   }
 }
 
 export const unAuthorization = (): CastomThunkType => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(loaded(true));
-    authAPI.unLogin().then((res) => {
-      console.log(res)
-      if (res.resultCode === AuthResultCodeEnum.Success) {
-        // dispatch(getAuth())
-        dispatch(setAuthUserData(null, null, null, false));
-        dispatch(loaded(false))
-      } else {
-        console.log('invalid exit')
-        dispatch(loaded(false))
-      }
-    })
+    const res = await authAPI.unLogin()
+    if (res.resultCode === AuthResultCodeEnum.Success) {
+      dispatch(setAuthUserData(null, null, null, false));
+      dispatch(loaded(false))
+    } else {
+      dispatch(loaded(false))
+    }
   }
 }
 

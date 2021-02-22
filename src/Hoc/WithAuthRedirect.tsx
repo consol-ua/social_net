@@ -2,9 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import { GlobalStateType } from "../redux/redux-store";
-type isAuth = {
-  isAuth: boolean
-}
+
 export function WithAuthRedirect(WrappedComponent: React.ElementType) {
   class RedirectComponent extends React.Component<any> {
     render() {

@@ -16,9 +16,10 @@ type PhotosType = {
   large: string | null
 }
 export type ProfileType = {
+  aboutMe: string | null
   userId: number
   lookingForAJob: boolean
-  lookingForAJobDescription: string
+  lookingForAJobDescription: string | null
   fullName: string
   contacts?: any
   photos: PhotosType
@@ -59,30 +60,6 @@ const initialState: InitialStateType = {
   ],
   usersProfile: null
 };
-// const profileReduser = (state = initialState, action) => {
-
-//   switch (action.type) {
-//     case ADD_NEW_POST_TEXT: {
-//       let newState = { ...state };
-
-//       newState.newPostText = action.text;
-//       return newState;
-//     }
-//     case ADD_NEW_MY_POST: {
-//       let newState = { ...state };
-//       newState.myPosts = [...state.myPosts];
-//       newState.myPosts.push({
-//         id: 5,
-//         img: state.logo,
-//         text: state.newPostText
-//       });
-//       newState.newPostText = "";
-//       return newState;
-//     }
-//     default:
-//       return state;
-//   }
-// };
 
 type ActionsType = addNewMyPostActionType | SetUserProfileActionType | EditModeType
 
@@ -143,10 +120,9 @@ export const setUserProfile = (data: ProfileType): SetUserProfileActionType => (
 
 type CastomThunkType = ThunkAction<void, GlobalStateType, unknown, ActionsType>
 export const getUserProfile = (userId: number): CastomThunkType => {
-  return (dispatch) => {
-    userAPI.getUserProfile(userId).then((response: any) => {
-      dispatch(setUserProfile(response));
-    });
+  return async (dispatch) => {
+    const response = await userAPI.getUserProfile(userId)
+    dispatch(setUserProfile(response));
   };
 };
 

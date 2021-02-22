@@ -6,6 +6,7 @@ import usersReducer from "./users-reduser";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import appReducer from "./app-reduser";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 let reducers = combineReducers({
   auth: authReducer,
@@ -19,6 +20,6 @@ let reducers = combineReducers({
 type ReducersType = typeof reducers
 export type GlobalStateType = ReturnType<ReducersType>
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunkMiddleware)));
 
 export default store;

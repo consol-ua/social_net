@@ -1,61 +1,19 @@
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { userAPI } from "../API/API";
+import { mapArrayCondition } from "../secondary/secondaryFunction";
 import { GlobalStateType } from "./redux-store";
 
-const SET_USERS = "SET_USERS";
-const FOLLOWED = "FOLLOWED";
-const UNFOLLOWED = "UNFOLLOWED";
-const SET_TOTOL_USERS_COUNT = "SET_TOTOL_USERS_COUNT";
-const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
-const LOADED = "LOADED";
-const TOGGLE_FOLLOWING_PROGRESS = "TOGGLE_FOLLOWING_PROGRESS";
+const SET_USERS = "users-reducer/SET_USERS";
+const FOLLOWED = "users-reducer/FOLLOWED";
+const UNFOLLOWED = "users-reducer/UNFOLLOWED";
+const SET_TOTOL_USERS_COUNT = "users-reducer/SET_TOTOL_USERS_COUNT";
+const SET_CURRENT_PAGE = "users-reducer/SET_CURRENT_PAGE";
+const LOADED = "users-reducer/LOADED";
+const TOGGLE_FOLLOWING_PROGRESS = "users-reducer/TOGGLE_FOLLOWING_PROGRESS";
 
 const initialState = {
-  items: [
-    // {
-    //   name: "Shubert",
-    //   id: 1,
-    //   photos: {
-    //     small:
-    //       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg",
-    //     large: null
-    //   },
-    //   status: null,
-    //   followed: false
-    // },
-    // {
-    //   name: "Hacker",
-    //   id: 2,
-    //   photos: {
-    //     small:
-    //       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Desert_Electric.jpg/1200px-Desert_Electric.jpg",
-    //     large: null
-    //   },
-    //   status: null,
-    //   followed: false
-    // },
-    // {
-    //   name: "Dima",
-    //   id: 3,
-    //   photos: {
-    //     small: "https://ktonanovenkogo.ru/image/priroda-gora.jpg",
-    //     large: null
-    //   },
-    //   status: null,
-    //   followed: false
-    // },
-    // {
-    //   name: "Anna",
-    //   id: 4,
-    //   photos: {
-    //     small: "https://ktonanovenkogo.ru/image/priroda-gora.jpg",
-    //     large: null
-    //   },
-    //   status: null,
-    //   followed: false
-    // }
-  ] as Array<any>,
+  items: [] as Array<any>,
   currentPage: 1,
   pageSize: 5,
   totalUsersCount: 0,
@@ -66,6 +24,7 @@ const initialState = {
 type InitialStateType = typeof initialState
 type ActionsType = FollowOnClickActionType | UnFollowOnClickActionType | SetUsersActionType |
   SetTotalUsersCountActionType | SetCurrentPageActionType | LoadedActionType | ToggleFollowingInProgressActionType
+
 const usersReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case SET_USERS:
@@ -73,22 +32,12 @@ const usersReducer = (state = initialState, action: ActionsType): InitialStateTy
     case FOLLOWED:
       return {
         ...state,
-        items: state.items.map((el) => {
-          if (el.id === action.idUser) {
-            el.followed = true;
-          }
-          return el;
-        }),
+        items: mapArrayCondition(state.items, "id", action.idUser, "followed", true)
       };
     case UNFOLLOWED:
       return {
         ...state,
-        items: state.items.map((el) => {
-          if (el.id === action.idUser) {
-            el.followed = false;
-          }
-          return el;
-        }),
+        items: mapArrayCondition(state.items, "id", action.idUser, "followed", false)
       };
     case SET_TOTOL_USERS_COUNT:
       return {
@@ -133,7 +82,7 @@ type SetUsersActionType = {
   type: typeof SET_USERS
   users: any
 }
-export const setUsers = (users: any): SetUsersActionType => ({ type: SET_USERS, users });
+export const setUsers = (users: Array<any>): SetUsersActionType => ({ type: SET_USERS, users });
 type SetTotalUsersCountActionType = {
   type: typeof SET_TOTOL_USERS_COUNT
   count: number
@@ -163,42 +112,40 @@ export const toggleFollowingInProgress = (isLoaded: boolean, userId: number): To
   userId,
 });
 
+
 export const getUsersThunkCreator = (pageSize: number, currentPage: number) => {
-  return (dispatch: Dispatch<ActionsType>, getState: () => GlobalStateType) => {
+  return async (dispatch: Dispatch<ActionsType>, getState: () => GlobalStateType) => {
     dispatch(loaded(true));
     dispatch(setCurrentPage(currentPage));
-    userAPI.getUsers(pageSize, currentPage).then((response: any) => {
-      dispatch(setTotalUsersCount(response.totalCount));
-      dispatch(setUsers(response.items));
-      dispatch(loaded(false));
-    });
+    const response = await userAPI.getUsers(pageSize, currentPage)
+    dispatch(setTotalUsersCount(response.totalCount));
+    dispatch(setUsers(response.items));
+    dispatch(loaded(false));
   };
 };
 
 type DispatchType = Dispatch<ActionsType>
 type GetStateType = () => GlobalStateType
 export const followSuccess = (userId: number) => {
-  return (dispatch: DispatchType, getState: GetStateType) => {
+  return async (dispatch: DispatchType, getState: GetStateType) => {
     dispatch(toggleFollowingInProgress(true, userId));
-    userAPI.postFollowUser(userId).then((response: any) => {
-      if (response.resultCode === 0) {
-        dispatch(followOnClick(userId));
-      }
-      dispatch(toggleFollowingInProgress(false, userId));
-    });
+    const response = await userAPI.postFollowUser(userId)
+    if (response.resultCode === 0) {
+      dispatch(followOnClick(userId));
+    }
+    dispatch(toggleFollowingInProgress(false, userId));
   };
 };
 
-type CastomThunkType = ThunkAction<void, GlobalStateType, unknown, ActionsType> // можно использовать вместо длинной строки
-export const unFollowSuccess = (userId: number): ThunkAction<void, GlobalStateType, unknown, ActionsType> => {
-  return (dispatch) => {
+type CastomThunkType = ThunkAction<void, GlobalStateType, unknown, ActionsType>
+export const unFollowSuccess = (userId: number): CastomThunkType => {
+  return async (dispatch) => {
     dispatch(toggleFollowingInProgress(true, userId));
-    userAPI.delFollowUser(userId).then((response: any) => {
-      if (response.resultCode === 0) {
-        dispatch(unFollowOnClick(userId));
-      }
-      dispatch(toggleFollowingInProgress(false, userId));
-    });
+    const response = await userAPI.delFollowUser(userId)
+    if (response.resultCode === 0) {
+      dispatch(unFollowOnClick(userId));
+    }
+    dispatch(toggleFollowingInProgress(false, userId));
   };
 };
 
